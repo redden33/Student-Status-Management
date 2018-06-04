@@ -42,6 +42,20 @@ public class MainActivity extends AppCompatActivity {
         values.put("credit","11");
         StudentsDatabase.insert("Class",null,values);
 
+        values.put("name","信号与系统");
+        values.put("cno","cxz123");
+        values.put("teacher","王亮");
+        values.put("kind","BX");
+        values.put("credit","9");
+        StudentsDatabase.insert("Class",null,values);
+
+        values.put("name","微机与系统原理");
+        values.put("cno","cxz123");
+        values.put("teacher","王暗");
+        values.put("kind","XX");
+        values.put("credit","19");
+        StudentsDatabase.insert("Class",null,values);
+
         values.put("name","操作系统");
         values.put("cno","zxc123");
         values.put("teacher","李暗");
@@ -165,12 +179,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 int grade=0;
+                int i=0;
                 Cursor cursor = StudentsDatabase.query("Class,Grade",new String[]{"grade"},
                         "Class.cno=Grade.cno and sno=? and kind='BX'",new String[]{et_query_grade_id.getText().toString()},null,null,null);
                 while (cursor.moveToNext()) {
-                    grade = cursor.getInt(cursor.getColumnIndex("grade"));
+                    grade = grade + cursor.getInt(cursor.getColumnIndex("grade"));
+                    i++;
                 }
-                newAlertDialog("必修课平均成绩:"+grade);
+                newAlertDialog("必修课平均成绩:"+grade/i);
             }
         });
 
@@ -178,12 +194,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 int grade=0;
+                int i=0;
                 Cursor cursor= StudentsDatabase.query("Class,Grade",new String[]{"grade"},
                         "Class.cno=Grade.cno and sno=? and kind='XX'",new String[]{et_query_grade_id.getText().toString()},null,null,null);
                 while (cursor.moveToNext()) {
-                    grade = cursor.getInt(cursor.getColumnIndex("grade"));
+                    grade = grade + cursor.getInt(cursor.getColumnIndex("grade"));
+                    i++;
                 }
-                newAlertDialog("选修课平均成绩:"+grade);
+                newAlertDialog("选修课平均成绩:"+grade/i);
             }
         });
 
